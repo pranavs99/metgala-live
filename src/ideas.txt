@@ -1,0 +1,127 @@
+package main
+
+import (
+	"fmt"
+	"net/http"
+)
+
+// // replace with DynamoDB tables
+// var accounts = []account{
+// 	{Username: "admin", Password: "sudo"},
+// 	{Username: "pranav", Password: "lol"},
+// }
+
+// // internally representing a user's account
+// type account struct {
+// 	Username string `json:"username"`
+// 	Password string `json:"password"`
+// }
+
+// func accountCreated(username string) bool {
+// 	for _, a := range accounts {
+// 		if a.Username == username {
+// 			return true
+// 		}
+// 	}
+// 	return false
+// }
+
+// // curl /account/dump
+// func getAccountDump(c *gin.Context) {
+// 	// log GET request to /accounts
+// 	log.Printf("INFO: GET request to /account/dump\n")
+// 	// return 200 status code + user accounts in JSON
+// 	c.IndentedJSON(http.StatusOK, accounts)
+// }
+
+// // curl /account/:username
+// func getAccountByUsername(c *gin.Context) {
+// 	// fetch :username parameter from GET request path
+// 	un := c.Param("username")
+
+// 	// iterate through []accounts to find instance with requested username
+// 	for _, a := range accounts {
+// 		if a.Username == un {
+// 			c.IndentedJSON(http.StatusOK, a)
+// 			log.Printf("INFO: account for username %s found\n", un)
+// 			return
+// 		}
+// 	}
+
+// 	// if username not found, log error...
+// 	msgNotFound := fmt.Sprintf("ERROR: account for username %s not found\n", un)
+// 	log.Printf(msgNotFound)
+
+// 	// ... and return same log message in response
+// 	c.IndentedJSON(
+// 		http.StatusNotFound,
+// 		gin.H{
+// 			"message": msgNotFound,
+// 		})
+// }
+
+// // POST to /account/create
+// func postAccountCreate(c *gin.Context) {
+// 	// create new account instance based on POST payload
+// 	var newAccount account
+
+// 	// extract payload from POST request
+// 	bindErr := c.BindJSON(&newAccount)
+// 	if bindErr != nil {
+// 		// log binding error
+// 		log.Printf(
+// 			"ERROR: %s\n",
+// 			bindErr)
+// 		// prepare message for response
+// 		msgBindErr := fmt.Sprintf(
+// 			"ERROR: c.BindJSON(): %s\n",
+// 			bindErr)
+// 		// throw 500 if there's an error in .BindJSON()
+// 		c.IndentedJSON(
+// 			http.StatusInternalServerError,
+// 			gin.H{
+// 				"message": msgBindErr,
+// 			})
+// 		return
+// 	}
+
+// 	// if username already exists, then throw 403 and send error message
+// 	if accountCreated(newAccount.Username) {
+// 		msgAccountExists := fmt.Sprintf(
+// 			"ERROR: account for username %s already exists\n",
+// 			newAccount.Username)
+// 		// throw error and bail
+// 		c.IndentedJSON(
+// 			http.StatusForbidden,
+// 			gin.H{
+// 				"message": msgAccountExists,
+// 			})
+// 	} else {
+// 		// append new account
+// 		accounts = append(accounts, newAccount)
+// 		// return 201 status code + newly created account
+// 		c.IndentedJSON(http.StatusCreated, newAccount)
+// 	}
+// }
+
+// // print log information to screen
+// log.SetOutput(os.Stderr)
+
+// // create Gin router
+// router := gin.Default()
+
+// // path group for user accounts
+// accountGroup := router.Group("/account")
+// {
+// 	// create new account
+// 	accountGroup.POST("/create", accountutils.postAccountCreate())
+
+// 	// return account from username param
+// 	accountGroup.GET("/lookup/:username", accountutils.getAccountByUsername)
+
+// 	// return all accounts
+// 	accountGroup.GET("/dump", accountutils.getAccountDump)
+// }
+
+// // serve out of localhost:8081
+// http.ListenAndServe(":8081", router)
